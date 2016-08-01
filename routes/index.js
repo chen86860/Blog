@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var fortune = require('../lib/fortune/fortune');
 
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('index', {title: 'Express', content: 'Hello world'});
 });
-
 
 
 router.get('/about', function (req, res, next) {
@@ -17,7 +17,7 @@ router.get('/about', function (req, res, next) {
     )
 });
 
-router.get('/chat',function (req, res, next) {
+router.get('/chat', function (req, res, next) {
     res.render('chat');
 });
 

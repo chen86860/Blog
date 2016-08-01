@@ -87,7 +87,7 @@
             background-color: #535151;
             transition: background 1s;
             text-align: center;
-
+            outline: none;
         }
 
         .btnSend > input:hover {
@@ -208,7 +208,7 @@
     </style>
 {% endblock %}
 {% block content %}
-    <form action="/users/sendmail" method="post">
+    <form action="/user/sendmail" method="post">
         <section class="warp">
             <ul class="ulList">
                 <li>
@@ -237,12 +237,6 @@
                         <input type="submit" id="submit" value="发送">
                         <span class="flag">{{ status }} </span>
                     </label></li>
-                <li>
-                    <label class="btnSend">
-                        <input type="text" onclick="bold()" value="发送">
-                        <span class="flag">{{ status }} </span>
-                    </label>
-                </li>
             </ul>
         </section>
 
@@ -251,7 +245,7 @@
         function bold() {
 
         }
-        
+
         function initEvent() {
             if (!document.getElementById) return false;
             if (!document.getElementById('recipients')) return false;
@@ -270,7 +264,7 @@
                     return postSomething(data) ? false : true;
                 }
                 else {
-                    alert('aaa');
+//                    alert('aaa');
                     return false;
                 }
             };
@@ -280,7 +274,7 @@
             var xhr = new XMLHttpRequest();
             if (xhr) {
                 // xhr.open([string]method,[string]url,[boolen optional]async,[string optional]user, [sting optional]password)
-                xhr.open('POST', '/users/sendmail', true);
+                xhr.open('POST', '/user/sendmail', true);
                 xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
                 xhr.onreadystatechange = function () {
@@ -309,7 +303,7 @@
             if (!document.getElementById) return false;
             if (!document.getElementById('recipients')) return false;
             var recipients = document.getElementById('recipients').value.trim();
-            if (recipients.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)) {
+            if (recipients.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/) == null) {
                 return false;
             }
             else {

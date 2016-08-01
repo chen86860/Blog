@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login In</title>
+</head>
+<body>
+<form action="/user/login" method="post">
+    <p><span>用户名</span><label for=""></label><input type="text" name="username"></p>
+    <p><span>密码</span><label for=""></label><input type="password" name="password"></p>
+    <p><span>密码</span><label for=""></label><input type="submit" value="Login In"></p>
+    <p>{{ status }}</p>
+    <p>{{ details }}</p>
+</form>
+</body>
+</html>

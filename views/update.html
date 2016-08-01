@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update profile</title>
+</head>
+<body>
+<form action="/user/update" method="post">
+    <p><span>用户名</span><label for=""></label><input type="text" name="username"></p>
+    <p><span>密码</span><label for=""></label><input type="password" name="oldpassword"></p>
+    <p><span>新密码</span><label for=""></label><input type="password" name="newpassword"></p>
+    <p><span></span><label for=""></label><input type="submit" name="submit" value="Update"></p>
+</form>
+
+<p>{{ newpsw }}</p>
+<p>{{ result[0] }}
+    {% for item in result %}
+        item
+    {% endfor %}
+</p>
+</body>
+</html>

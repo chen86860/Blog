@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Remove profile</title>
+</head>
+<body>
+<form action="/user/remove" method="post">
+    <p><span>用户名</span><label for=""></label><input type="text" name="username"></p>
+    <p><span></span><label for=""></label><input type="submit" name="submit" value="Remove"></p>
+    {{ status }}
+    {{ details }}
+</form>
+</body>
+</html>

@@ -3,12 +3,13 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var nunjucks = require('nunjucks');
+var credentials = require('./lib/credentials');
 
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
 
 var app = express();
 
@@ -22,6 +23,9 @@ nunjucks.configure('views', {
 // uncomment after placing your favicon in /public
 app.use(express.static(__dirname+'/public'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//init cookieSecret
+app.use(require('cookie-parser')(credentials.cookieSecret));
+app.use(require('express-session')());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -30,7 +34,7 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/user', user);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
