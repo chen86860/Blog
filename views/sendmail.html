@@ -1,0 +1,333 @@
+{% extends 'layout.html' %}
+{% block title %}Send mail{% endblock %}
+{% block head %}
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            width: 100%;
+            padding: 0;
+            display: flex;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .ulList {
+            list-style: none;
+            padding-left: 0;
+
+        }
+
+        .warp {
+            width: 900px;
+            margin: 20px auto;
+        }
+
+        .ulList > li > p {
+            line-height: 30px;
+
+        }
+
+        .liRecipitens, .liSubject {
+            border-bottom: 1px solid #868686;
+            transition: border 0.6s;
+
+        }
+
+        .liSubject:hover, .liRecipitens:hover {
+            border-color: #0c0c0c;
+
+        }
+
+        .ulList > li > p > label {
+            width: 100%;
+        }
+
+        .ulList > li > p > label > span {
+            display: inline-block;
+            width: 7%;
+            font-size: 14px;
+        }
+
+        .ulList > li > p > label > input {
+            width: 91%;
+            height: 24px;
+            display: inline;
+            font-size: 14px;
+            outline: none;
+            border: none;
+            font-weight: 600;
+        }
+
+        #content {
+            border: 1px solid #6f6f6f;
+            width: 886px;
+            padding: 6px;
+            resize: none;
+            height: 240px;
+            transition: box-shadow 1s;
+        }
+
+        #content:hover {
+            -webkit-box-shadow: 0 0 14px #d1d1d1;
+            -moz-box-shadow: 0 0 14px #d1d1d1;
+            box-shadow: 0 0 14px #d1d1d1;
+        }
+
+        .btnSend {
+
+        }
+
+        .btnSend > input {
+            width: 80px;
+            height: 28px;
+            border: 1px solid #ddd;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #535151;
+            transition: background 1s;
+            text-align: center;
+
+        }
+
+        .btnSend > input:hover {
+            background-color: #0c0c0c;
+        }
+
+        form {
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-moz-keyframes fadeIn /* Firefox */
+        {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-webkit-keyframes fadeIn /* Safari 和 Chrome */
+        {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @-o-keyframes fadeIn /* Opera */
+        {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-moz-keyframes fadeOut /* Firefox */
+        {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-webkit-keyframes fadeOut /* Safari 和 Chrome */
+        {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        @-o-keyframes fadeOut /* Opera */
+        {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        section {
+            animation: fadeIn 2s;
+            -moz-animation: fadeIn 2s; /* Firefox */
+            -webkit-animation: fadeIn 2s; /* Safari 和 Chrome */
+            -o-animation: fadeIn 2s; /* Opera */
+        }
+
+        .flag {
+            font-size: 14px;
+            color: #535151;
+            -webkit-animation: fadeOut 6s;
+            -o-animation: fadeOut 6s;
+            left: 10px;
+            position: relative;
+            opacity: 1;
+            -webkit-transition: all 10s ease-in-out;
+            -moz-transition: all 10s ease-in-out;
+            -o-transition: all 10s ease-in-out;
+            transition: all 10s ease-in-out;
+        }
+
+        .fadeOut {
+            animation: fadeOut 6s;
+            -moz-animation: fadeOut 6s; /* Firefox */
+            -webkit-animation: fadeOut 6s; /* Safari 和 Chrome */
+            -o-animation: fadeOut 6s; /* Opera */
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <form action="/users/sendmail" method="post">
+        <section class="warp">
+            <ul class="ulList">
+                <li>
+                    <p class="liRecipitens">
+                        <label for="recipients">
+                            <span>收件人：</span>
+                            <input type="email" name="recipients" id="recipients" autocomplete="" required>
+                        </label>
+                    </p>
+                </li>
+                <li>
+                    <p class="liSubject">
+                        <label for="subjece">
+                            <span>主　题：</span>
+                            <input type="text" id="subject" name="subject">
+                        </label>
+                    </p></li>
+                <li>
+                    <p>
+                        <label for="textarea"><textarea name="content" cols="30" rows="10"
+                                                        id="content"></textarea></label>
+                    </p></li>
+                <li>
+
+                    <label class="btnSend">
+                        <input type="submit" id="submit" value="发送">
+                        <span class="flag">{{ status }} </span>
+                    </label></li>
+                <li>
+                    <label class="btnSend">
+                        <input type="text" onclick="bold()" value="发送">
+                        <span class="flag">{{ status }} </span>
+                    </label>
+                </li>
+            </ul>
+        </section>
+
+    </form>
+    <script type="text/javascript">
+        function bold() {
+
+        }
+        
+        function initEvent() {
+            if (!document.getElementById) return false;
+            if (!document.getElementById('recipients')) return false;
+            if (!document.getElementById('submit')) return false;
+            var recipients = document.getElementById('recipients');
+            recipients.focus();
+
+            var submit = document.getElementById('submit');
+            var form = document.forms[0];
+            form.onsubmit = function () {
+                if (checkInput()) {
+                    var recipients = document.getElementById('recipients').value;
+                    var subject = document.getElementById('subject').value;
+                    var content = document.getElementById('content').value;
+                    var data = 'recipients=' + recipients + '&&subject=' + subject + '&&content=' + content;
+                    return postSomething(data) ? false : true;
+                }
+                else {
+                    alert('aaa');
+                    return false;
+                }
+            };
+
+        }
+        function postSomething(data) {
+            var xhr = new XMLHttpRequest();
+            if (xhr) {
+                // xhr.open([string]method,[string]url,[boolen optional]async,[string optional]user, [sting optional]password)
+                xhr.open('POST', '/users/sendmail', true);
+                xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.onreadystatechange = function () {
+                    if ((xhr.readyState == 4) && (xhr.status == 200)) {
+                        //return xhr.responseText、xhr.responseType、xhr.responseXML
+                        var flag = document.getElementsByClassName('flag')[0];
+                        if (xhr.responseText == 'OK') {
+                            flag.firstChild.nodeValue = '发送成功^_^';
+                        } else {
+                            flag.firstChild.nodeValue = '发送失败:(';
+                        }
+                        flag.style.opacity = 0;
+                        return true;
+                    }
+                }
+
+
+            } else {
+                return false;
+            }
+            xhr.send(data);
+            return true;
+        }
+
+        function checkInput() {
+            if (!document.getElementById) return false;
+            if (!document.getElementById('recipients')) return false;
+            var recipients = document.getElementById('recipients').value.trim();
+            if (recipients.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        function addLoadEvent(func) {
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                window.onload = func;
+            } else {
+                window.onload = function () {
+                    oldonload();
+                    func();
+                }
+            }
+        }
+        addLoadEvent(initEvent)
+    </script>
+{% endblock %}

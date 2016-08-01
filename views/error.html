@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{#{% block title %}#}
+    {#{{ error }}#}
+{#{% endblock %}#}
+{% block content %}
+    <h1>StatusCode:{{ statusCode }}</h1>
+    <h2>{{ error }}</h2>
+    <h2>Details:{{ message }}</h2>
+{% endblock %}
