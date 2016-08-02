@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
+var article = require('./routes/article');
 
 var app = express();
 
@@ -20,8 +21,9 @@ nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
+
 // uncomment after placing your favicon in /public
-app.use(express.static(__dirname+'/public'));
+app.use(express.static(__dirname + '/public'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //init cookieSecret
 app.use(require('cookie-parser')(credentials.cookieSecret));
@@ -35,6 +37,7 @@ app.use(cookieParser());
 
 app.use('/', routes);
 app.use('/user', user);
+app.use('/article', article);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -70,50 +70,65 @@ function sendMail(recipients, subject, content, mailType, callback) {
     });
 }
 
+router.route('/logout')
+    .get(function (req, res, next) {
+        req.session.userinfo = null;
+        res.redirect('/');
+    });
+
 router.route('/signup')
     .get(function (req, res, next) {
-        res.render('signup');
+        if (req.session.userinfo) {
+            res.redirect('/');
+        } else {
+            res.render('signup');
+        }
+
     })
     .post(function (req, res, next) {
-        if (req.body.email.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)) {
-            //或查询
-            userDoc.find({$or: [{username: req.body.username}, {email: req.body.email}]}, function (err, result) {
-                if (err) return console.error(err);
-                if (result.length > 0) {
-                    var exists = result[0].email == req.body.email ? "mail address" : "username";
-                    res.render('signup', {
-                        status: "BAD",
-                        details: "The " + exists + " is exist.please try another one!"
-                    });
-                }
-                else {
-                    var newuser = new userDoc({
-                        username: req.body.username,
-                        password: md5(req.body.password),
-                        email: req.body.email
-                    });
-                    //增加数据
-                    newuser.save(function (err, newuser) {
-                        if (err)
-                            res.render('signup', {
-                                status: "BAD",
-                                details: "singup is BAD,please check your input"
-                            });
-                        else {
-                            res.render('signup', {
-                                status: 'OK',
-                                details: "signup is OK,enjoy please :D"
-                            })
-                        }
-                    })
-                }
-            })
-        }
-        else {
-            res.render('signup', {
-                status: "BAD",
-                details: "email address is invalid"
-            })
+        if (req.session.userinfo) {
+            res.redirect('/')
+        } else {
+            if (req.body.email.match(/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/)) {
+                //或查询
+                userDoc.find({$or: [{username: req.body.username}, {email: req.body.email}]}, function (err, result) {
+                    if (err) return console.error(err);
+                    if (result.length > 0) {
+                        var exists = result[0].email == req.body.email ? "mail address" : "username";
+                        res.render('signup', {
+                            status: "BAD",
+                            details: "The " + exists + " is exist.please try another one!"
+                        });
+                    }
+                    else {
+                        var newuser = new userDoc({
+                            username: req.body.username,
+                            password: md5(req.body.password),
+                            email: req.body.email
+                        });
+                        //增加数据
+                        newuser.save(function (err, newuser) {
+                            if (err)
+                                res.render('signup', {
+                                    status: "BAD",
+                                    details: "singup is BAD,please check your input"
+                                });
+                            else {
+                                res.render('signup', {
+                                    status: 'OK',
+                                    details: "signup is OK,enjoy please :D"
+                                })
+                            }
+                        })
+                    }
+                })
+            }
+            else {
+                res.render('signup', {
+                    status: "BAD",
+                    details: "email address is invalid"
+                })
+            }
         }
     });
 
@@ -131,7 +146,8 @@ router.route('/login')
         userDoc.find(user, function (err, result) {
             if (err) return console.error(err); else {
                 if (result[0] && (md5(req.body.password) == result[0].password)) {
-                    req.session.userinfo = result[0].usrname + result[0].email;
+                    result[0].password = "*";
+                    req.session.userinfo = result[0];
                     res.render('login', {
                         status: 'OK',
                         details: "login sueeccd,please enjoy it :D"
