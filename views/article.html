@@ -14,7 +14,7 @@
 
         .warp {
             margin: 20px auto;
-            width: 875px;
+            width: 70%;
             background-color: #ffffff;
             border-radius: 3px;
             box-shadow: 2px 2px 10px #ddd;
@@ -23,11 +23,17 @@
 
         header {
             margin: 0 auto;
-            width: 900px;
+            width: 100%;
             height: 90px;
             line-height: 60px;
             color: #009688;
             font-size: 24px;
+        }
+
+        header > h1 {
+            width: 70%;
+            /* display: inherit; */
+            margin: 0 auto;
         }
 
         h3 {
@@ -53,10 +59,11 @@
             padding-right: 2em;
         }
 
-        section{
+        section {
 
             margin: 20px 0 20px 0;
         }
+
         footer {
             width: 100%;
             height: 100px;
@@ -68,6 +75,28 @@
             font-size: 13px;
             position: absolute;
         }
+
+        .postArticle {
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            position: fixed;
+            right: 2%;
+            bottom: 2%;
+            background-color: #009688;
+            margin: 0;
+            padding: 0;
+        }
+
+        .postArticleBck {
+            width: 100%;
+            height: 100%;
+            display: inline-block;
+            background: url('/images/edit.svg') no-repeat;
+            background-size: 30px;
+            background-position: 50% 50%;
+
+        }
     </style>
 </head>
 <body>
@@ -75,7 +104,6 @@
     <h1>Jack's Blog</h1>
 </header>
 <div class="warp">
-
     {% for item in article %}
         <section>
             <h3>{{ item.title }}</h3>
@@ -83,10 +111,84 @@
             <p class="articleContent">{{ item.content }}</p>
         </section>
     {% endfor %}
-
+    <a href="/article/post" class="postArticle">
+        <span class="postArticleBck"></span>
+    </a>
 </div>
-<footer>
-    联系方式 | jack.com 2003 - 2016 Site Mia
-</footer>
+{#<footer>#}
+{#联系方式 | jack.com 2003 - 2016 Site Mia#}
+{#</footer>#}
+<script type="text/javascript">
+    var page = 1;
+    var lock = true;
+
+    var scrollFunc = function (e) {
+        var direct = 0;
+        e = e || window.event;
+        if (e.wheelDelta) {
+            if (e.wheelDelta < 0) {
+                if (document.body.scrollHeight - document.body.clientHeight - window.scrollY < 400) {
+                    if (lock) {
+                        postSomething();
+                         lock = false;
+                    }
+                }
+            }
+        }
+    };
+
+    //滚动滑轮触发scrollFunc方法
+    window.onmousewheel = scrollFunc;
+    var warp = document.getElementsByClassName('warp')[0];
+    function addContent(title, createTime, username, content) {
+        var newConten = document.createElement('section');
+        var newTitle = document.createElement('h3');
+        newTitle.appendChild(document.createTextNode(title));
+        var newP1 = document.createElement('p');
+        newP1.className = 'articleInfo';
+        var newSpan = document.createElement('span');
+        newSpan.appendChild(document.createTextNode(createTime + "/" + username));
+        newP1.appendChild(newSpan);
+        var newP2 = document.createElement('p');
+        newP2.className = 'articleContent';
+        newP2.appendChild(document.createTextNode(content));
+        newConten.appendChild(newTitle);
+        newConten.appendChild(newP1);
+        newConten.appendChild(newP2);
+
+        warp.appendChild(newConten);
+    }
+
+
+    function postSomething() {
+        var xhr = new XMLHttpRequest();
+        if (xhr) {
+            // xhr.open([string]method,[string]url,[boolen optional]async,[string optional]user, [sting optional]password)
+            xhr.open('POST', '/article', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.onreadystatechange = function () {
+                if ((xhr.readyState == 4) && (xhr.status == 200)) {
+                    //return xhr.responseText、xhr.responseType、xhr.responseXML
+                    var responseData = JSON.parse(xhr.responseText);
+                    page = parseInt(JSON.stringify(responseData.page));
+                    console.log(parseInt(JSON.stringify(responseData.page)));
+                    for (i = 0; i < responseData.article.length; i++) {
+//                        console.log(responseData.article[i].title)
+                        addContent(responseData.article[i].title, responseData.article[i].createTime, responseData.article[i].username, responseData.article[i].content);
+                    }
+                }
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+        xhr.send("page=" + page);
+        return true;
+    }
+
+
+</script>
 </body>
 </html>

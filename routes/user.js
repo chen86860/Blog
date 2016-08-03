@@ -148,10 +148,11 @@ router.route('/login')
                 if (result[0] && (md5(req.body.password) == result[0].password)) {
                     result[0].password = "*";
                     req.session.userinfo = result[0];
-                    res.render('login', {
-                        status: 'OK',
-                        details: "login sueeccd,please enjoy it :D"
-                    });
+                    res.redirect('/article');
+                    // res.render('login', {
+                    //     status: 'OK',
+                    //     details: "login sueeccd,please enjoy it :D"
+                    // });
                 } else {
                     res.render('login', {
                         status: 'BAD',
