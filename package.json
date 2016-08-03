@@ -12,9 +12,11 @@
     "express": "~4.13.4",
     "grunt": "^1.0.1",
     "jade": "~1.11.0",
+    "markdown": "^0.5.0",
     "morgan": "~1.7.0",
     "nodemailer": "^2.5.0",
     "serve-favicon": "~2.3.0",
+    "shortid": "^2.2.6",
     "socket.io": "^1.4.8"
   }
 }

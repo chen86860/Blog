@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Article</title>
     <style type="text/css">
+
         html, body {
             width: 100%;
             height: 100%;
@@ -64,6 +65,11 @@
             margin: 20px 0 20px 0;
         }
 
+        section > a {
+            color: #505050;
+            text-decoration: none;
+        }
+
         footer {
             width: 100%;
             height: 100px;
@@ -106,7 +112,7 @@
 <div class="warp">
     {% for item in article %}
         <section>
-            <h3>{{ item.title }}</h3>
+            <a href="{{ item.id }}"><h3>{{ item.title }}</h3></a>
             <p class="articleInfo"><span>{{ item.createTime }}/{{ item.username }}</span></p>
             <p class="articleContent">{{ item.content }}</p>
         </section>
@@ -121,44 +127,6 @@
 <script type="text/javascript">
     var page = 1;
     var lock = true;
-
-    var scrollFunc = function (e) {
-        var direct = 0;
-        e = e || window.event;
-        if (e.wheelDelta) {
-            if (e.wheelDelta < 0) {
-                if (document.body.scrollHeight - document.body.clientHeight - window.scrollY < 400) {
-                    if (lock) {
-                        postSomething();
-                         lock = false;
-                    }
-                }
-            }
-        }
-    };
-
-    //滚动滑轮触发scrollFunc方法
-    window.onmousewheel = scrollFunc;
-    var warp = document.getElementsByClassName('warp')[0];
-    function addContent(title, createTime, username, content) {
-        var newConten = document.createElement('section');
-        var newTitle = document.createElement('h3');
-        newTitle.appendChild(document.createTextNode(title));
-        var newP1 = document.createElement('p');
-        newP1.className = 'articleInfo';
-        var newSpan = document.createElement('span');
-        newSpan.appendChild(document.createTextNode(createTime + "/" + username));
-        newP1.appendChild(newSpan);
-        var newP2 = document.createElement('p');
-        newP2.className = 'articleContent';
-        newP2.appendChild(document.createTextNode(content));
-        newConten.appendChild(newTitle);
-        newConten.appendChild(newP1);
-        newConten.appendChild(newP2);
-
-        warp.appendChild(newConten);
-    }
-
 
     function postSomething() {
         var xhr = new XMLHttpRequest();
@@ -175,7 +143,7 @@
                     console.log(parseInt(JSON.stringify(responseData.page)));
                     for (i = 0; i < responseData.article.length; i++) {
 //                        console.log(responseData.article[i].title)
-                        addContent(responseData.article[i].title, responseData.article[i].createTime, responseData.article[i].username, responseData.article[i].content);
+                        addContent(responseData.article[i].id, responseData.article[i].title, responseData.article[i].createTime, responseData.article[i].username, responseData.article[i].content);
                     }
                 }
                 return true;
@@ -188,6 +156,92 @@
         return true;
     }
 
+    function listenWheel(e) {
+        e = e || window.event;
+        if (e.wheelDelta) {
+            if (e.wheelDelta < 0) {
+                console.log(e.wheelDelta);
+                if (document.body.scrollHeight - document.body.clientHeight - window.scrollY < 400) {
+                    postSomething();
+                }
+            }
+        }
+    }
+
+    function listenScroll() {
+        if ((document.body.scrollHeight - document.body.clientHeight - window.scrollY > 395))
+            if (document.body.scrollHeight - document.body.clientHeight - window.scrollY < 400) {
+                console.log(document.body.scrollHeight - document.body.clientHeight - window.scrollY)
+            }
+    }
+
+
+    var warp = document.getElementsByClassName('warp')[0];
+    function addContent(id, title, createTime, username, content) {
+        var newConten = document.createElement('section');
+        var newAtitle = document.createElement('a');
+
+        var articleId = id == 'undefined' ? '#' : id;
+
+        newAtitle.setAttribute('href', "/article/" + articleId);
+        var newTitle = document.createElement('h3');
+        newTitle.appendChild(document.createTextNode(title));
+        newAtitle.appendChild(newTitle);
+
+        var newP1 = document.createElement('p');
+        newP1.className = 'articleInfo';
+
+        var newSpan = document.createElement('span');
+        newSpan.appendChild(document.createTextNode(createTime + "/" + username));
+
+        newP1.appendChild(newSpan);
+        var newP2 = document.createElement('p');
+        newP2.className = 'articleContent';
+        newP2.appendChild(document.createTextNode(content));
+
+        newConten.appendChild(newAtitle);
+        newConten.appendChild(newP1);
+        newConten.appendChild(newP2);
+        warp.appendChild(newConten);
+
+    }
+
+    function getScrollTop() {
+        var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+        if (document.body) {
+            bodyScrollTop = document.body.scrollTop;
+        }
+        if (document.documentElement) {
+            documentScrollTop = document.documentElement.scrollTop;
+        }
+        scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+        return scrollTop;
+    }
+    function getScrollHeight() {
+        var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight;
+        if (document.body) {
+            bodyScrollHeight = document.body.scrollHeight;
+        }
+        if (document.documentElement) {
+            documentScrollHeight = document.documentElement.scrollHeight;
+        }
+        scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+        return scrollHeight;
+    }
+    function getWindowHeight() {
+        var windowHeight = 0;
+        if (document.compatMode == 'CSS1Compat') {
+            windowHeight = document.documentElement.clientHeight;
+        } else {
+            windowHeight = document.body.clientHeight;
+        }
+        return windowHeight;
+    }
+    window.onscroll = function () {
+        if (getScrollTop() == getScrollHeight() - getWindowHeight()) {
+            postSomething();
+        }
+    }
 
 </script>
 </body>

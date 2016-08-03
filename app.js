@@ -4,10 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var nunjucks = require('nunjucks');
 var credentials = require('./lib/credentials');
-
+var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
 var routes = require('./routes/index');
 var user = require('./routes/user');
 var article = require('./routes/article');
@@ -27,7 +26,9 @@ app.use(express.static(__dirname + '/public'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //init cookieSecret
 app.use(require('cookie-parser')(credentials.cookieSecret));
-app.use(require('express-session')());
+//设置session
+app.use(session({secret: credentials.cookieSecret, cookie: {maxAge: 60000}, resave: true, saveUninitialized: true}))
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

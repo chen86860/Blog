@@ -6,7 +6,7 @@ var md5 = require('../node_modules/md5');
 
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/Blog');
+mongoose.createConnection('mongodb://localhost/Blog');
 var Schema = mongoose.Schema;
 
 var db = mongoose.connection;
