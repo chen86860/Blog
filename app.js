@@ -27,7 +27,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //init cookieSecret
 app.use(require('cookie-parser')(credentials.cookieSecret));
 //设置session
-app.use(session({secret: credentials.cookieSecret, cookie: {maxAge: 60000}, resave: true, saveUninitialized: true}))
+app.use(session({secret: credentials.cookieSecret, cookie: {maxAge: 600000}, resave: true, saveUninitialized: true}));
 
 
 app.use(logger('dev'));

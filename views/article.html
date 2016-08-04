@@ -26,7 +26,7 @@
             margin: 0 auto;
             width: 100%;
             height: 90px;
-            line-height: 60px;
+            line-height: 90px;
             color: #009688;
             font-size: 24px;
         }
@@ -40,7 +40,7 @@
         h3 {
             padding-left: 40px;
             border-bottom: 1px solid #ddd;
-            height: 60px;
+            /*height: 60px;*/
             line-height: 60px;
             font-size: 28px;
             margin: 0;
@@ -58,6 +58,12 @@
             text-indent: 4em;
             padding-left: 2em;
             padding-right: 2em;
+            -ms-text-overflow: ellipsis;
+            -o-text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
         }
 
         section {
@@ -103,6 +109,89 @@
             background-position: 50% 50%;
 
         }
+
+        .fixedbox {
+            position: fixed;
+            display: inline-block;
+            right: 2%;
+            bottom: 2%;
+            width: 50px;
+        }
+
+        .fixedbox > ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+
+        }
+
+        .fixedbox > ul > li {
+            width: 50px;
+            height: 50px;
+        }
+
+        .musicbox {
+            display: inline-block;
+            width: 49px;
+            border: 1px solid #e2e2e2;
+            height: 49px;
+            background-color: #f1f1f1;
+        }
+
+        .togglewarp {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: inherit;
+            overflow: hidden;
+        }
+
+        .togglecomp {
+            width: 50px;
+            height: 50px;
+            align-items: center;
+            display: inline-block;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease-out
+            top: 0;
+        }
+
+        .togglecomp > span {
+            transition: all 0.3s ease-out
+        }
+
+        .toggleplay > span {
+            width: 2px;
+            display: inline-block;
+            height: 0;
+            border-bottom: 18px solid transparent;
+            border-top: 18px solid transparent;
+            border-left: 34px solid rgb(255, 0, 0);
+            border-right: 0 solid transparent;
+        }
+
+        .togglepause > span {
+            width: 7px;
+            /* height: 25px; */
+            /* background-color: #fff; */
+            /* display: inline-block; */
+            /* text-align: center; */
+            /* padding: 0 7px 0; */
+            /*margin: 0 3px 0;*/
+        }
+
+        .togglepause1 {
+            width: 7px;
+            height: 16px;
+            /*background-color: #fff;*/
+            display: inline-block;
+            text-align: right;
+            border-top: 13px solid transparent;
+            border-left: 15px solid #fff;
+            border-right: 0 solid #fff;
+            border-bottom: 12px solid transparent;
+        }
     </style>
 </head>
 <body>
@@ -111,19 +200,43 @@
 </header>
 <div class="warp">
     {% for item in article %}
-        <section>
-            <a href="{{ item.id }}"><h3>{{ item.title }}</h3></a>
-            <p class="articleInfo"><span>{{ item.createTime }}/{{ item.username }}</span></p>
-            <p class="articleContent">{{ item.content }}</p>
-        </section>
+    <section>
+        <a href="./article/{{ item.id }}"><h3>{{ item.title }}</h3></a>
+        <p class="articleInfo"><span>{{ item.createTime }}/{{ item.username }}</span></p>
+        <p class="articleContent">{{ item.contentSummary }}</p>
+    </section>
     {% endfor %}
-    <a href="/article/post" class="postArticle">
-        <span class="postArticleBck"></span>
+    <div class="fixedbox">
+        <ul>
+            <li></li>
+            <li>
+                <span class="togglewarp">
+                    <span class="togglecomp toggleplay">
+                        <span></span>
+                    </span>
+                    <span class="togglecomp togglepause">
+                        <span class=""> </span><span class="togglepause2"></span>
+                    </span>
+                </span>
+                <a href="#" id="music" class="musicbox"></a>
+            </li>
+            <li><a href="/article/post" class="postArticle">
+                <span class="postArticleBck"></span>
+            </a></li>
+        </ul>
+    </div>
+
+
     </a>
+
 </div>
-{#<footer>#}
-{#联系方式 | jack.com 2003 - 2016 Site Mia#}
-{#</footer>#}
+{{ status }}
+{#
+<footer>#}
+    {#联系方式 | jack.com 2003 - 2016 Site Mia#}
+    {#
+</footer>
+#}
 <script type="text/javascript">
     var page = 1;
     var lock = true;
@@ -143,7 +256,7 @@
                     console.log(parseInt(JSON.stringify(responseData.page)));
                     for (i = 0; i < responseData.article.length; i++) {
 //                        console.log(responseData.article[i].title)
-                        addContent(responseData.article[i].id, responseData.article[i].title, responseData.article[i].createTime, responseData.article[i].username, responseData.article[i].content);
+                        addContent(responseData.article[i].id, responseData.article[i].title, responseData.article[i].createTime, responseData.article[i].username, responseData.article[i].contentSummary);
                     }
                 }
                 return true;
@@ -183,7 +296,7 @@
 
         var articleId = id == 'undefined' ? '#' : id;
 
-        newAtitle.setAttribute('href', "/article/" + articleId);
+        newAtitle.setAttribute('href', "./article/" + articleId);
         var newTitle = document.createElement('h3');
         newTitle.appendChild(document.createTextNode(title));
         newAtitle.appendChild(newTitle);
@@ -240,6 +353,23 @@
     window.onscroll = function () {
         if (getScrollTop() == getScrollHeight() - getWindowHeight()) {
             postSomething();
+        }
+    }
+
+    var stataflag = 0;
+    var togglewarp = document.getElementsByClassName('togglewarp')[0];
+    var togglePlay = document.getElementsByClassName('toggleplay')[0];
+    var togglepause = document.getElementsByClassName('togglepause')[0];
+    togglewarp.onclick = function () {
+        if (stataflag == 0) {
+            togglepause.childNodes[1].className = 'togglepause1'
+            togglePlay.style.top = '-50px';
+            togglepause.style.top = '-50px';
+
+            stataflag = 1;
+        } else {
+            togglePlay.style.top = 0;
+            stataflag = 0;
         }
     }
 

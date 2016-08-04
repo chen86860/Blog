@@ -1,0 +1,236 @@
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Post Air</title>
+    <script src="/javascripts/base.js" type="text/javascript"></script>
+    <script src="/javascripts/deps.js" type="text/javascript"></script>
+    <script src="/javascripts/dom.js" type="text/javascript"></script>
+    <script>
+        goog.require('goog.dom');
+        goog.require('goog.editor.Command');
+        goog.require('goog.editor.Field');
+        goog.require('goog.editor.plugins.BasicTextFormatter');
+        goog.require('goog.editor.plugins.EnterHandler');
+        goog.require('goog.editor.plugins.HeaderFormatter');
+        goog.require('goog.editor.plugins.LinkBubble');
+        goog.require('goog.editor.plugins.LinkDialogPlugin');
+        goog.require('goog.editor.plugins.ListTabHandler');
+        goog.require('goog.editor.plugins.LoremIpsum');
+        goog.require('goog.editor.plugins.RemoveFormatting');
+        goog.require('goog.editor.plugins.SpacesTabHandler');
+        goog.require('goog.editor.plugins.UndoRedo');
+        goog.require('goog.ui.editor.DefaultToolbar');
+        goog.require('goog.ui.editor.ToolbarController');
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/editor/demo/demo.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/editor/main.css"/>
+
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            background-color: #f1f1f1;
+        }
+
+        section {
+            width: 80%;
+            height: 100%;
+            display: block;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 2px 2px 10px #ddd;
+            min-width: 680px;
+        }
+
+        section > form {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: hidden;
+            margin: 0;
+            min-width: 680px;
+        }
+
+        .postTitle {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .postTitle > input {
+            width: 100%;
+            border: none;
+            outline: none;
+            height: 50px;
+            font-size: 30px;
+            clear: both;
+            padding: 8px 3% 8px 3%;
+            margin: 17px 0 10px 0;
+        }
+
+        #toolbar {
+            height: 39px;
+            background-color: #e6e6e6;
+            min-width: 680px;
+        }
+
+        #editMe {
+            display: block;
+            width: 100%;
+            resize: none;
+            border: none;
+            padding: 10px 3% 10px 3%;
+            /* margin: 0; */
+            min-height: 362px;
+            height: 100%;
+            font-size: 18px;
+            outline: none;
+            margin: 0;
+        }
+
+        .postContent {
+            width: 100%;
+            height: 83%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .editable {
+            margin: 0;
+            padding: 10px 3% 10px 3%;
+        }
+
+        .postSubmit {
+            width: 120px;
+            height: 100%;
+            border: none;
+            text-align: right;
+            padding: 0;
+            padding-right: 18px;
+            background-color: #e6e6e6;
+            cursor: pointer;
+            float: right;
+            color: #696969;
+            transition: all 0.4s;
+            background: url('/images/submit1.svg') no-repeat;
+            background-size: 20px;
+            background-position: 22% 50%;
+            position: relative;
+            right: 0;
+            outline: none;
+            z-index: 999;
+        }
+
+        .postSubmit:hover {
+            background: url('/images/submit0.svg') no-repeat;
+            background-size: 20px;
+            background-position: 22% 50%;
+            color: #fff;
+            background-color: #696969;
+        }
+    </style>
+</head>
+
+<body>
+<section>
+    <form action="/article/post" method="post" id="form">
+        <p class="postTitle">
+            <input type="text" class="title" placeholder="無標題文章" name="title" required>
+        </p>
+        <div id='toolbar'><input class="postSubmit" type="submit" value="发布文章"></div>
+        <div class="postContent">
+            <div id='editMe'></div>
+        </div>
+    </form>
+</section>
+<script>
+
+    // Create an editable field.
+    var myField = new goog.editor.Field('editMe');
+
+    // Create and register all of the editing plugins you want to use.
+    myField.registerPlugin(new goog.editor.plugins.BasicTextFormatter());
+    myField.registerPlugin(new goog.editor.plugins.RemoveFormatting());
+    myField.registerPlugin(new goog.editor.plugins.UndoRedo());
+    myField.registerPlugin(new goog.editor.plugins.ListTabHandler());
+    myField.registerPlugin(new goog.editor.plugins.SpacesTabHandler());
+    myField.registerPlugin(new goog.editor.plugins.EnterHandler());
+    myField.registerPlugin(new goog.editor.plugins.HeaderFormatter());
+    myField.registerPlugin(
+            new goog.editor.plugins.LinkDialogPlugin());
+    myField.registerPlugin(new goog.editor.plugins.LinkBubble());
+
+    // Specify the buttons to add to the toolbar, using built in default buttons.
+    var buttons = [
+        goog.editor.Command.BOLD,
+        goog.editor.Command.ITALIC,
+        goog.editor.Command.STRIKE_THROUGH,
+        goog.editor.Command.UNDERLINE,
+        goog.editor.Command.FONT_SIZE,
+        goog.editor.Command.LINK,
+        goog.editor.Command.UNDO,
+        goog.editor.Command.REDO,
+        goog.editor.Command.UNORDERED_LIST,
+        goog.editor.Command.ORDERED_LIST,
+        goog.editor.Command.INDENT,
+        goog.editor.Command.OUTDENT,
+        goog.editor.Command.REMOVE_FORMAT
+    ];
+    var myToolbar = goog.ui.editor.DefaultToolbar.makeToolbar(buttons,
+            goog.dom.getElement('toolbar'));
+
+    // Hook the toolbar into the field.
+    var myToolbarController =
+            new goog.ui.editor.ToolbarController(myField, myToolbar);
+
+    myField.makeEditable();
+
+    var form = document.getElementById('form');
+    form.onsubmit = function () {
+        var title = document.getElementsByClassName('title')[0];
+        content = myField.getCleanContents();
+        var data = "title=" + title.value + "&&content=" + encodeURI(content).replace(/&/g, '%26') + "&&contentSummary=" + content.replace(/<\s*\w*\s*.*?>/g, '').replace(/&\S*;/g, "").substr(0, 300);
+        if (checkInput()) {
+            xhrPost(data);
+        } else {
+            alert('标题太长');
+        }
+
+        return false;
+    };
+
+    function xhrPost(data) {
+        var xhr = new XMLHttpRequest();
+        if (xhr) {
+            // xhr.open([string]method,[string]url,[boolen optional]async,[string optional]user, [sting optional]password)
+            xhr.open('POST', '/article/post', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.onreadystatechange = function () {
+                if ((xhr.readyState == 4) && (xhr.status == 200)) {
+                    if (xhr.responseText && xhr.responseText == 'ok') {
+                        window.location.href = '/article';
+                    } else {
+                        alert('Something wrong...');
+                    }
+                }
+                return true;
+            }
+        }
+        else {
+            return false;
+        }
+        xhr.send(data);
+        return true;
+    }
+
+    function checkInput() {
+        var title = document.getElementsByClassName('title')[0];
+        return title.value.length > 50 ? false : true;
+    }
+</script>
+</body>
+</html>

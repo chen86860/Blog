@@ -10,6 +10,8 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.13.4",
+    "froala-editor": "^2.3.4",
+    "google-closure-library": "^20160713.0.0",
     "grunt": "^1.0.1",
     "jade": "~1.11.0",
     "markdown": "^0.5.0",
@@ -17,6 +19,8 @@
     "nodemailer": "^2.5.0",
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.6",
-    "socket.io": "^1.4.8"
+    "simditor": "^2.3.6",
+    "socket.io": "^1.4.8",
+    "uuid": "^2.0.2"
   }
 }

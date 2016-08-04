@@ -97,6 +97,12 @@
             background-position: 50% 50%;
 
         }
+        img{
+            /*width: 100%;*/
+            /* height: 100%; */
+            margin: 0 auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -105,11 +111,17 @@
     <section>
         <h3>{{ article[0].title }}</h3>
         <p class="articleInfo"><span>{{ article[0].createTime }}/{{ article[0].username }}</span></p>
-        <p class="articleContent">{{ article[0].content }}</p>
+        <div class="articleContent">
+            {{ article[0].content }}
+        </div>
     </section>
     <a href="/article/post" class="postArticle">
         <span class="postArticleBck"></span>
     </a>
 </div>
+<script type="text/javascript">
+    var articleContent = document.getElementsByClassName('articleContent')[0];
+    articleContent.innerHTML = articleContent.firstChild.nodeValue;
+</script>
 </body>
 </html>
