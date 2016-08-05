@@ -63,6 +63,8 @@
             border-radius: 3px;
             transition: background 0.3s;
             font-size: 18px;
+            text-align: center;
+
         }
 
         .submit:hover {
@@ -115,16 +117,19 @@
         }
 
         .icons-login_twitter {
-            background-image: url('/images/twitter.svg')
+            background-image: url('/images/sprite.svg');
+            background-repeat: no-repeat;
+            background-position: -446px 0px;
         }
 
         .icons-login_gogole {
-            background-image: url('/images/google+.svg');
+            background-image: url('/images/sprite.svg');
+            background-repeat: no-repeat;
+            background-position: -126px -2px;
         }
 
         .icon {
             background-repeat: no-repeat;
-            background-size: 29px;
             width: 30px;
             height: 30px;
             display: inline-block;
@@ -152,6 +157,32 @@
         .form_footer > em {
             color: #99aabb;
         }
+
+        @-webkit-keyframes loading {
+            0% {
+
+                -webkit-transform: rotate(0deg);
+
+            }
+            50% {
+                -webkit-transform: rotate(180deg);
+
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+
+            }
+
+        }
+
+        .loading {
+            -webkit-animation: loading 2s infinite linear;
+            background-image: url("/images/loading.svg");
+            background-repeat: no-repeat;
+            background-size: 30px;
+            background-position: 50% 50%;
+        }
+
 
     </style>
 </head>
@@ -189,16 +220,23 @@
         <span><a href="./signup">Create an account</a></span>
     </div>
 </div>
+
+
 <p>{{ status }}</p>
 <p>{{ details }}</p>
 <script type="text/javascript">
     var loginform = document.getElementsByTagName('form')[0];
     var username = document.getElementById('username');
     var password = document.getElementById('password');
+
+    var submit = document.getElementsByClassName('submit')[0];
     loginform.onsubmit = function () {
         if (check.valid()) {
 //            alert('d');
-            xhrPost(username.value.toString().trim(), password.value.toString().trim());
+            submit.value = '';
+            submit.className += " loading";
+            return false;
+//            xhrPost(username.value.toString().trim(), password.value.toString().trim());
         } else {
             alert('用户名不合法');
             return false;
@@ -265,5 +303,6 @@
         return false;
     }
 </script>
+<script type="text/javascript" src="/javascripts/canvas-nest.min.js"></script>
 </body>
 </html>

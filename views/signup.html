@@ -200,7 +200,7 @@
     loginform.onsubmit = function () {
         if (check.valid()) {
 //            alert('d');
-            xhrPost(username.value.toString().trim(), password.value.toString().trim());
+            xhrPost(email.value.toString().trim(), password.value.toString().trim());
         } else {
             alert('用户名不合法');
             return false;
@@ -261,7 +261,7 @@
         else {
             return true;
         }
-        data = "email=" + email.toString().trim() + "&password=" + password.toString().trim();
+        data = "email=" + email + "&password=" + password;
         xhr.send(data);
         return false;
     }

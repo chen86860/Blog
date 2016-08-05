@@ -4,7 +4,7 @@ var router = express.Router();
 var credentials = require('../lib/credentials');
 var md5 = require('../node_modules/md5');
 var uuid = require('uuid');
-
+var ip = require('ip');
 
 var mongoose = require('mongoose');
 mongoose.createConnection('mongodb://localhost/Blog');
@@ -22,9 +22,7 @@ var blogSchema = new Schema({
     password: String,
     email: String,
     createTime: String,
-    createReginIP: String
-
-
+    createRegionIP: String
 });
 
 var userDoc = mongoose.model('userDoc', blogSchema);
@@ -116,13 +114,14 @@ router.route('/signup')
                         }
                     }
                     else {
+                        var uid = uuid.v4();
                         var myDate = new Date();
                         var newuser = new userDoc({
-                            uid: uuid.v4(),
-                            password: md5(req.body.password),
+                            uid: uid,
+                            password: md5(req.body.password + req.body.email),
                             email: req.body.email,
                             createTime: myDate.toLocaleDateString(),
-                            createReginIP: req.ip()
+                            createReginIP: ip.address()
 
                         });
                         //增加数据
@@ -137,6 +136,11 @@ router.route('/signup')
                                         status: 'OK',
                                         details: "signup is OK,enjoy please :D"
                                     })
+                                }
+                                req.session.userinfo = {
+                                    username: "",
+                                    uid: uid,
+                                    email: req.body.email
                                 }
                             }
                         })
