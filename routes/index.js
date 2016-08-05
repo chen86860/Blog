@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var fortune = require('../lib/fortune/fortune');
 
 
 /* GET home page. */
@@ -13,7 +12,6 @@ router
 router.get('/about', function (req, res, next) {
     res.render('about', {
             title: "fortunr",
-            content: fortune.getFortune()
         }
     )
 });

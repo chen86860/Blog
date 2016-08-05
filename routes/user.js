@@ -1,32 +1,11 @@
 var express = require('express');
-var nodemailer = require('nodemailer');
 var router = express.Router();
+var sendMail = require('../lib/credentials').sendMail;
 var credentials = require('../lib/credentials');
+var nodemailer = require('nodemailer');
 var md5 = require('../node_modules/md5');
 var uuid = require('uuid');
 var ip = require('ip');
-
-var mongoose = require('mongoose');
-mongoose.createConnection('mongodb://localhost/Blog');
-var Schema = mongoose.Schema;
-
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-    // we're connected!
-});
-
-var blogSchema = new Schema({
-    uid: String,
-    username: String,
-    password: String,
-    email: String,
-    createTime: String,
-    createRegionIP: String
-});
-
-var userDoc = mongoose.model('userDoc', blogSchema);
-
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
@@ -39,40 +18,6 @@ router.get('/', function (req, res, next) {
     }
 });
 
-
-function sendMail(recipients, subject, content, mailType, callback) {
-    var mailType = mailType || 'text';
-    // create reusable transporter object using the default SMTP transport
-
-    var transporter = nodemailer.createTransport(credentials.stmp.stmpSecert);
-
-    // setup e-mail data with unicode symbols
-    var mailOptions = {
-        from: '"Jams" <chen86860@yeah.net', // sender address
-        to: recipients, // list of receivers
-        subject: subject // Subject line
-        // mailType: content // plaintext body
-    };
-    mailOptions[mailType] = content;
-
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, function (error, info) {
-        var status = '';
-        var details = '';
-        if (error) {
-            status = 'err';
-            details = (typeof(info) != 'undefined') ? info : 'Mail Server Refuse'
-        }
-        else {
-            status = 'ok';
-            details = (typeof(info) != 'undefined') ? info : 'Mail Server Refuse'
-        }
-
-        if (callback && typeof(callback) == 'function') {
-            callback(status, details);
-        }
-    });
-}
 
 router.route('/logout')
     .get(function (req, res, next) {

@@ -1,13 +1,27 @@
 var mongoose = require('mongoose');
-mongoose.createConnection('mongodb://localhost/Blog');
-var Schema = mongoose.Schema;
+var credentials = require('../lib/credentials');
 
+mongoose.Promise = global.Promise;
+// mongoose.createConnection(credentials.mongo.development.connectString);
+mongoose.createConnection("mongodb://localhost/Blog");
+
+var Schema = mongoose.Schema;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-
+    //succeed
 });
 
+var articleSchema = new Schema({
+    id: String,
+    username: String,
+    createTime: String,
+    title: String,
+    contentSummary: String,
+    content: String
+});
+
+//Blog schema
 var blogSchema = new Schema({
     uid: String,
     username: String,
@@ -18,6 +32,7 @@ var blogSchema = new Schema({
 });
 
 
+//userprofile
 var userinfo = new Schema({
     uid: String,
     avar: String,
@@ -26,9 +41,9 @@ var userinfo = new Schema({
 });
 
 
+//向外界提供接口
+exports.userDoc = mongoose.model('userDoc', blogSchema);
 
-var userDoc = mongoose.model('userDoc', blogSchema);
-var userprofile = mongoose.model('userprofile', blogSchema);
-
-module.exports = userDoc;
-module.exports = userprofile;
+exports.userprofile = mongoose.model('userprofile', userinfo);
+var article = mongoose.model('article', articleSchema);
+exports.article = article;

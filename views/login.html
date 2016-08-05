@@ -232,11 +232,7 @@
     var submit = document.getElementsByClassName('submit')[0];
     loginform.onsubmit = function () {
         if (check.valid()) {
-//            alert('d');
-            submit.value = '';
-            submit.className += " loading";
-            return false;
-//            xhrPost(username.value.toString().trim(), password.value.toString().trim());
+            xhrPost(username.value.toString().trim(), password.value.toString().trim());
         } else {
             alert('用户名不合法');
             return false;

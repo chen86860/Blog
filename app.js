@@ -7,10 +7,15 @@ var credentials = require('./lib/credentials');
 var session = require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mon = require('./models/mongonDb');
+
+
 var routes = require('./routes/index');
 var user = require('./routes/user');
 var article = require('./routes/article');
 var submit = require('./routes/submit');
+
+
 var app = express();
 
 // view engine setup
@@ -24,16 +29,20 @@ nunjucks.configure('views', {
 // uncomment after placing your favicon in /public
 app.use(express.static(__dirname + '/public'));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 //init cookieSecret
-app.use(require('cookie-parser')(credentials.cookieSecret));
-//设置session
-app.use(session({secret: credentials.cookieSecret, cookie: {maxAge: 600000}, resave: true, saveUninitialized: true}));
-
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+app.use(session({
+    secret: credentials.cookieSecret,
+    name: 'xid',
+    cookie: {maxAge: 600000},//设置session十分钟后过期
+    resave: false,
+    saveUninitialized: true
+}));
+
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

@@ -1,29 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var shortid = require('shortid');
+var article = require('../models/mongonDb').article;
 
-var mongoose = require('mongoose');
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/Blog');
-var Schema = mongoose.Schema;
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-    // we're connected!
-});
 
-var articleSchema = new Schema({
-    id: String,
-    username: String,
-    createTime: String,
-    title: String,
-    contentSummary: String,
-    content: String
-});
-
-var article = mongoose.model('article', articleSchema);
 
 router.route('/')
     .get(function (req, res, next) {

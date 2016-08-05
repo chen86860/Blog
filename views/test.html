@@ -9,13 +9,11 @@
 </head>
 <body>
 <form action="/submit/" method="post">
-    <p><input type="text" name="username"></p>
+    <p><input type="text" name="tel"></p>
     <p><input type="submit"></p>
 </form>
 
-{% for item in result%}
-{{item}}
-{%endfor%}
+{{result}}
 </body>
 </html>
 
