@@ -1,9 +1,156 @@
-{% extends 'layout.html' %}
-{% block title %}
-    {{ title }}
-{% endblock %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat Room</title>
+    <script src="/javascripts/socket.io.js"></script>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-{#{% block head %}{% endblock %}#}
-{% block content %}
-    {{ content }}
-{% endblock %}
+        p, hr {
+            margin: 0
+        }
+
+        .loginMask {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            position: absolute;
+            background-color: #fffaf5;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .loginMask > p {
+            text-align: center;
+        }
+
+        .sendForm {
+            width: 100%;
+            display: flex;
+            position: fixed;
+            align-items: center;
+            justify-content: space-around;
+            bottom: 0;
+            border: 1px solid #343434;
+        }
+
+        .sendText {
+            width: 80%;
+            height: 40px;
+            outline: none;
+            /* padding: 0 2px 0; */
+            padding: 0;
+            margin: 0;
+            border: none;
+            padding-left: 10px;
+            font-size: 16px;
+        }
+
+        .sendBtn {
+            width: 20%;
+            color: #fff;
+            background-color: #343434;
+            height: 40px;
+            outline: none;
+            transition: all .8s;
+            cursor: pointer;
+            padding: 0;
+            border: none;
+        }
+
+        .sendBtn:hover {
+            background-color: #000;
+        }
+
+        .userNew {
+            text-align: center;
+        }
+
+        header > p {
+            font-size: 20px;
+            margin: 0 20px;
+        }
+
+        .msgContent {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+<div class="loginMask">
+
+    <h3>昵称<input type="text" id="username"><input type="button" value="确定" id="login"></h3>
+</div>
+<header>
+    <h2> 在线聊天室</h2>
+</header>
+<div class="content">
+    <p class="userlist"></p>
+    <p class="userNew"></p>
+</div>
+<div class="msgContent">
+
+</div>
+<footer class="sendForm">
+    <input type="text" id="msgbox" class="sendText">
+    <input type="button" value="发送" id="button" class="sendBtn">
+</footer>
+
+<script>
+    var socket = io();
+    var button = document.getElementById('button');
+    var login = document.getElementById('login');
+    var msgbox = document.getElementById('msgbox');
+    var username = document.getElementById('username');
+    var list = document.getElementsByClassName('userlist')[0];
+    button.onclick = function () {
+        socket.emit('chat message', {
+            msg: msgbox.value,
+            username: username.value
+        });
+        return false;
+    };
+
+    var loginMask = document.getElementsByClassName('loginMask')[0];
+
+    login.onclick = function () {
+        loginMask.remove();
+        socket.emit('login', {username: username.value})
+    };
+
+    var msgContent = document.getElementsByClassName('msgContent')[0];
+    socket.on('chatBack', function (msg) {
+        var newline = document.createElement('li');
+        newline.innerHTML = "[" + msg.date + "][" + msg.username + "]:" + msg.msg;
+        msgContent.appendChild(newline);
+    });
+
+    var group = '';
+    var userNew = document.getElementsByClassName('userNew')[0];
+    socket.on('users', function (msg) {
+        var userList = msg.userList;
+        for (i in userList) {
+            group += userList[i] + ",";
+        }
+        list.innerHTML = group;
+        group = "";
+
+        userNew.innerHTML = msg.newuser.toString() + "is comming";
+    })
+</script>
+</body>
+</html>

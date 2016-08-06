@@ -5,15 +5,12 @@ var router = express.Router();
 /* GET home page. */
 router
     .get('/', function (req, res, next) {
-    res.render('index', {title: 'Express', content: 'Hello world'});
-});
+        res.render('index', {title: 'Express', content: 'Hello world'});
+    });
 
 
-router.get('/about', function (req, res, next) {
-    res.render('about', {
-            title: "fortunr",
-        }
-    )
+router.get('/chatroom', function (req, res, next) {
+    res.render('chatroom')
 });
 
 router.get('/chat', function (req, res, next) {

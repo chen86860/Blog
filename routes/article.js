@@ -4,9 +4,6 @@ var shortid = require('shortid');
 var article = require('../models/mongonDb').article;
 
 
-
-
-
 router.route('/')
     .get(function (req, res, next) {
         var perPage = 5;

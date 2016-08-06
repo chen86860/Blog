@@ -45,7 +45,8 @@
             padding: 0;
             border: none;
         }
-        .sendBtn:hover{
+
+        .sendBtn:hover {
             background-color: #000;
         }
     </style>
@@ -64,13 +65,23 @@
     var socket = io();
     var form = document.forms[0];
     var m = document.getElementById('m');
+
     var message = document.getElementById('message');
 
     form.onsubmit = function () {
-        socket.emit('chat message', m.value);
+
+        socket.emit('chat message', m.value + socket.id);
         m.value = '';
         return false;
     };
+
+    socket.emit('login',{
+        userid:'',
+        username:''
+    });
+    socket.on('login',function (o) {
+
+    })
     socket.on('chat message', function (msg) {
         var newMsg = document.createElement('li');
         newMsg.innerHTML = msg;

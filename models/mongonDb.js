@@ -1,9 +1,10 @@
 var mongoose = require('mongoose');
 var credentials = require('../lib/credentials');
 
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 // mongoose.createConnection(credentials.mongo.development.connectString);
-mongoose.createConnection("mongodb://localhost/Blog");
+// mongoose.createConnection("mongodb://localhost/Blog");
+mongoose.connect(credentials.mongo.development.connectString);
 
 var Schema = mongoose.Schema;
 var db = mongoose.connection;
@@ -45,5 +46,5 @@ var userinfo = new Schema({
 exports.userDoc = mongoose.model('userDoc', blogSchema);
 
 exports.userprofile = mongoose.model('userprofile', userinfo);
-var article = mongoose.model('article', articleSchema);
-exports.article = article;
+
+exports.article = mongoose.model('articles', articleSchema);
