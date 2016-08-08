@@ -29,51 +29,6 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
-//online user
-//var onlineUsers=();
-//online user count
-//var onlineCoount= 0;
-
-var userList = {};
-var userConut = 0;
-var io = require('socket.io').listen(server);
-io.on('connect', function (socket) {
-    console.log('a new user connect');
-    var socketID = socket.id;
-
-    socket.on('login', function (obj) {
-        var name = obj.username;
-        if (!userList.hasOwnProperty(socketID)) {
-            userList[socketID] = name;
-        }
-
-        io.emit('users', {userList: userList, newuser: name});
-        console.log(userList);
-    });
-
-    // userList[userConut] = socket;
-    // io.emit('users', socket);
-
-    // console.log(socket.name);
-    //socket监听用户事件
-    // socket.on('event listening',callback)
-    socket.on('disconnect', function () {
-        delete userList[socketID];
-        console.log('user disconnect');
-    });
-
-
-    //socket.emit,发送用户消息
-    //socket is a sinlge info
-    //io.emit is a global info
-    socket.on('chat message', function (msg) {
-        console.log(msg);
-        var mydate = new Date();
-        var time = mydate.toLocaleDateString() + " " + mydate.getHours() + ":" + mydate.getMinutes() + ":" + mydate.getSeconds();
-        msg.date = time;
-        io.emit('chatBack', msg)
-    })
-});
 
 
 /**

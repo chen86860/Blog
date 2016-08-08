@@ -10,37 +10,9 @@ router
 
 
 router.get('/chatroom', function (req, res, next) {
-    res.render('chatroom')
+    res.render('inde')
 });
 
-router.get('/chat', function (req, res, next) {
-    res.render('chat');
-});
-
-// var items = {
-//     "name": "中国",
-//     "province": [{
-//         "name": "黑龙江",
-//         "cities": {
-//             "city": ["哈尔滨", "大庆"]
-//         }
-//     }, {
-//         "name": "广东",
-//         "cities": {
-//             "city": ["广州", "深圳", "珠海"]
-//         }
-//     }, {
-//         "name": "台湾",
-//         "cities": {
-//             "city": ["台北", "高雄"]
-//         }
-//     }, {
-//         "name": "新疆",
-//         "cities": {
-//             "city": ["乌鲁木齐"]
-//         }
-//     }]
-// };
 
 var items = {
     'ketchup': '5 tbsp',
