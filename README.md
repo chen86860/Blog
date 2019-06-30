@@ -6,6 +6,7 @@
 
 ### June
 
+- June 30, 2019 ~ [一文搞清楚前端 polyfill](https://github.com/chen86860/blog/issues/6)
 - June 20, 2019 ~ [利用资源预加载提升网站性能](https://github.com/chen86860/blog/issues/5)
 
 ### April
