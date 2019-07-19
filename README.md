@@ -4,6 +4,10 @@
 
 ## **2019**
 
+### Jul
+
+- Jul 19, 2019 ~ [ECMAScript 提案使用小记](https://github.com/chen86860/blog/issues/7)
+
 ### June
 
 - June 30, 2019 ~ [一文搞清楚前端 polyfill](https://github.com/chen86860/blog/issues/6)
