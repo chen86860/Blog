@@ -2,6 +2,16 @@
 
 > Any application that can be written in JavaScript, will eventually be written in JavaScript. — Atwood's Law
 
+### 2019-07-27 更新:
+
+optional chaining 和 nullish coalescing 提案已进入 Stage 3 阶段 ，并且TypeScript 3.7 将支持optional chaining 语法（https://github.com/microsoft/TypeScript/issues/16）。
+
+此外，文中的『可选属性』或『可选函数』命名方式不准确，翻译成“可选链”或者根据贺老的说法 nullish-aware property access / call 来翻译更为合适些。
+
+以下为原文：
+
+---
+
 ## 1. optional chaining
 
 前端一个常见的编程模式是使用短路检查来获取具有 tree 结构的值/方法。例如：
