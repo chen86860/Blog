@@ -279,9 +279,7 @@ https://github.com/getsentry/sentry-webpack-plugin
 
 ## 结语
 
-前端监控系统接入以后，才真正发现许多不易发现或不小心产生的异常，例如经常碰到的`Undefined is not a/an Function/Object`
-
-、`Network Error` 等等，也意识到了应用的运行的真实环境是这么复杂。有针对性地解决这些问题，对于整个前端业务的稳定、用户体验的提升、项目经验的积累都大有裨益。
+前端监控系统接入以后，才真正发现许多不易发现或不小心产生的异常，例如经常碰到的`Undefined is not a/an Function/Object`、`Network Error` 等等，也意识到了应用的运行的真实环境是这么复杂。有针对性地解决这些问题，对于整个前端业务的稳定、用户体验的提升、项目经验的积累都大有裨益。
 
 ## 参考
 
