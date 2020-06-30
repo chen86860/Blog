@@ -10,7 +10,7 @@
 
 ### 1. Sentry 优点
 
-- ####多平台支持
+- #### 多平台支持
 
   支持多种平台（Web、Mobile、Native）多种语言（JavaScript、PHP、Go、Java、Cocoa 等，完整支持列表见[Platforms](https://docs.sentry.io/platforms/)，以及供 Self-host 等功能。
 
