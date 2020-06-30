@@ -2,6 +2,14 @@
 
 > My Own Swordsman
 
+## **2020**
+
+### June
+
+- June 30, 2020 ~ [Sentry 介绍及接入流程](https://github.com/chen86860/blog/issues/8)
+
+---
+
 ## **2019**
 
 ### Jul
