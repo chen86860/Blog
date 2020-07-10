@@ -12,9 +12,9 @@
 
 ## **2019**
 
-### Jul
+### July
 
-- Jul 19, 2019 ~ [ECMAScript 提案使用小记](https://github.com/chen86860/blog/issues/7)
+- July 19, 2019 ~ [ECMAScript 提案使用小记](https://github.com/chen86860/blog/issues/7)
 
 ### June
 
