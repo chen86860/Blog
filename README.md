@@ -2,6 +2,14 @@
 
 > My Own Swordsman
 
+## **2021**
+
+### Dec
+
+- Dec 2, 2021 ~ [Building a tree shaking package using rollup.](https://github.com/chen86860/blog/issues/9)
+
+---
+
 ## **2020**
 
 ### June
