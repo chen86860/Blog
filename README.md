@@ -2,11 +2,19 @@
 
 > My Own Swordsman
 
+## **2022**
+
+### Jan
+
+- Jan 2, 2022 ~ [Create a Server Sent Event Service using Node.js](https://github.com/chen86860/blog/issues/11)
+
+---
+
 ## **2021**
 
 ### Dec
 
-- Dec 2, 2021 ~ [Building a tree shaking package using rollup.](https://github.com/chen86860/blog/issues/9)
+- Dec 2, 2021 ~ [Building a tree shaking package using rollup](https://github.com/chen86860/blog/issues/9)
 
 ---
 
