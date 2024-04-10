@@ -2,6 +2,14 @@
 
 > My Own Swordsman
 
+## **2024**
+
+### Apr
+
+- Apr 10, 2024 ~ [使用 Cloud Run 部署 Docker 应用](https://github.com/chen86860/blog/issues/12)
+
+---
+
 ## **2022**
 
 ### Jan
