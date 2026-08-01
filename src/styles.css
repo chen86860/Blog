@@ -1,0 +1,330 @@
+/* Hallmark · pre-emit critique: P5 H5 E5 S4 R5 V4
+ * Hallmark · genre: modern-minimal · macrostructure: Ecosystem Index · theme: Cobalt
+ * tone: technical / calm-confident · anchor hue: electric cobalt 256°
+ * paper band: cool light · display style: grotesk-sans · accent hue: cool
+ * nav: N1a minimal 2-link (blog genuinely has 2 destinations) · footer: Ft2 inline single line
+ * enrichment: none — typography only, one featured cover
+ * design system: inherited from emmmm.dev (../tools) — sibling site, consistency over rotation
+ */
+
+@import 'tailwindcss';
+
+/* Self-hosted variable fonts — same files emmmm.dev ships, so the two sites
+ * render identically and neither depends on fonts.googleapis.com. */
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource-variable/jetbrains-mono';
+
+@import './tokens.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: 'Space Grotesk Variable', 'Space Grotesk', 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace,
+    SFMono-Regular, Menlo, monospace;
+
+  --color-accent: var(--c-accent);
+  --color-accent-bright: var(--c-accent-bright);
+  --color-paper-2: var(--c-paper-2);
+  --color-rule: var(--c-rule);
+  --color-ink: var(--c-ink);
+  --color-ink-2: var(--c-ink-2);
+  --color-ink-3: var(--c-ink-3);
+}
+
+@layer base {
+  html {
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+    background-color: var(--c-paper);
+    color: var(--c-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Display face is roman everywhere — italic headers are a tell. */
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-style: normal;
+    letter-spacing: -0.018em;
+    /* Long Chinese/English titles must break inside the word, not overflow. */
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklch, var(--c-accent) 22%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--c-focus);
+    outline-offset: 2px;
+    /* Never transition the ring — keyboard users need it instantly. */
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion vocabulary — exactly two signals, both borrowed from emmmm.dev.
+ * Everything else on this site is static on purpose.
+ * ------------------------------------------------------------------------ */
+
+/* 1 · cobalt underline-grow — the only hover language for links */
+@utility link-underline {
+  background-image: linear-gradient(var(--c-accent), var(--c-accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size var(--dur-short) var(--ease-out);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* 2 · index row wash — a cool paper tint, no lift, no shadow, no scale */
+@utility index-row {
+  transition: background-color var(--dur-short) var(--ease-out);
+
+  &:hover {
+    background-color: var(--c-paper-2);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Prose — styles the HTML GitHub renders for an issue body.
+ * ------------------------------------------------------------------------ */
+
+.prose-issue {
+  color: var(--c-ink);
+  line-height: 1.78;
+  font-size: 1.0625rem;
+  overflow-wrap: break-word;
+}
+
+.prose-issue > *:first-child {
+  margin-top: 0;
+}
+
+.prose-issue h1,
+.prose-issue h2,
+.prose-issue h3,
+.prose-issue h4,
+.prose-issue h5,
+.prose-issue h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.28;
+  letter-spacing: -0.018em;
+  margin: 2.25rem 0 1rem;
+  scroll-margin-top: 5rem;
+}
+
+.prose-issue h1 {
+  font-size: 1.75rem;
+}
+.prose-issue h2 {
+  font-size: 1.4rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--c-rule);
+}
+.prose-issue h3 {
+  font-size: 1.2rem;
+}
+.prose-issue h4,
+.prose-issue h5,
+.prose-issue h6 {
+  font-size: 1.05rem;
+}
+
+/* GitHub injects a permalink <a class="anchor"> before each heading's text. */
+.prose-issue .anchor {
+  float: left;
+  margin-left: -1.25rem;
+  padding-right: 0.25rem;
+  opacity: 0;
+  transition: opacity var(--dur-micro) var(--ease-out);
+}
+.prose-issue h1:hover .anchor,
+.prose-issue h2:hover .anchor,
+.prose-issue h3:hover .anchor,
+.prose-issue h4:hover .anchor {
+  opacity: 0.5;
+}
+.prose-issue .octicon {
+  fill: currentColor;
+  vertical-align: text-bottom;
+}
+
+.prose-issue p {
+  margin: 1.15rem 0;
+}
+
+.prose-issue a {
+  color: var(--c-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.dark .prose-issue a {
+  color: var(--c-accent-bright);
+}
+
+.prose-issue ul,
+.prose-issue ol {
+  margin: 1.15rem 0;
+  padding-left: 1.5rem;
+}
+.prose-issue ul {
+  list-style: disc;
+}
+.prose-issue ol {
+  list-style: decimal;
+}
+.prose-issue li {
+  margin: 0.4rem 0;
+}
+.prose-issue li::marker {
+  color: var(--c-ink-3);
+}
+.prose-issue ul.contains-task-list {
+  list-style: none;
+  padding-left: 0.25rem;
+}
+
+.prose-issue blockquote {
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.1rem;
+  border-left: 2px solid var(--c-accent);
+  color: var(--c-ink-2);
+}
+.prose-issue blockquote p {
+  margin: 0.5rem 0;
+}
+
+.prose-issue code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+  background-color: var(--c-paper-3);
+}
+
+.prose-issue pre {
+  margin: 1.5rem 0;
+  padding: 1.1rem 1.25rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  background-color: var(--c-paper-2);
+  border: 1px solid var(--c-rule);
+}
+.dark .prose-issue pre {
+  background-color: var(--c-paper-3);
+}
+.prose-issue pre code {
+  padding: 0;
+  background: none;
+  font-size: inherit;
+}
+
+.prose-issue img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 1.5rem auto;
+  display: block;
+  border: 1px solid var(--c-rule);
+}
+
+.prose-issue hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--c-rule);
+}
+
+.prose-issue table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  display: block;
+  overflow-x: auto;
+  font-variant-numeric: tabular-nums;
+}
+.prose-issue th,
+.prose-issue td {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--c-rule);
+  text-align: left;
+}
+.prose-issue th {
+  background-color: var(--c-paper-2);
+  font-weight: 600;
+}
+
+.prose-issue kbd {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.15em 0.45em;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-rule);
+  border-bottom-width: 2px;
+  background-color: var(--c-paper-2);
+}
+
+/* GitHub's syntax highlighting classes (`pl-*`), light + dark. Without these,
+ * fenced code blocks render monochrome. */
+.prose-issue .pl-c {
+  color: var(--c-syn-comment);
+  font-style: italic;
+}
+.prose-issue .pl-k {
+  color: var(--c-syn-keyword);
+}
+.prose-issue .pl-s,
+.prose-issue .pl-pds,
+.prose-issue .pl-sr {
+  color: var(--c-syn-string);
+}
+.prose-issue .pl-c1,
+.prose-issue .pl-s .pl-v {
+  color: var(--c-syn-constant);
+}
+.prose-issue .pl-en,
+.prose-issue .pl-entl {
+  color: var(--c-syn-function);
+}
+.prose-issue .pl-e,
+.prose-issue .pl-smi,
+.prose-issue .pl-v {
+  color: var(--c-syn-variable);
+}
+.prose-issue .pl-ent {
+  color: var(--c-syn-tag);
+}
+.prose-issue .pl-pse,
+.prose-issue .pl-corl {
+  color: var(--c-syn-string);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

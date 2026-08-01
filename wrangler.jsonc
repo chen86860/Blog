@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "blog",
+  "compatibility_date": "2026-07-31",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    // Public config — safe to commit. The GitHub token is a secret, set with:
+    //   pnpm wrangler secret put GITHUB_TOKEN
+    "GITHUB_OWNER": "chen86860",
+    "GITHUB_REPO": "blog",
+    // Only publish issues carrying this label. Leave empty to publish every
+    // issue you open in the repo.
+    "GITHUB_LABEL": "",
+    "SITE_URL": "https://blog.emmmm.dev",
+    "SITE_TITLE": "Jack's Blog",
+    "SITE_DESCRIPTION": "My Own Swordsman"
+  }
+}

@@ -1,0 +1,88 @@
+/* Hallmark · tokens · theme: Cobalt
+ * Inherited from emmmm.dev (../tools/src/app/globals.css) so the two sibling
+ * sites share one palette. Light band is a straight port; the dark band is
+ * derived here — emmmm.dev is light-only, this blog is not.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* surface — cool engineered near-white, never #fff */
+  --c-paper: oklch(98.5% 0.004 250);
+  --c-paper-2: oklch(96.8% 0.006 252);
+  --c-paper-3: oklch(94.6% 0.008 254);
+  --c-paper-blur: oklch(98.5% 0.004 250 / 0.82);
+
+  /* ink — cool charcoal, never #000 */
+  --c-ink: oklch(24% 0.02 258);
+  --c-ink-2: oklch(40% 0.018 257);
+  --c-ink-3: oklch(55% 0.014 256);
+
+  /* accent — ONE electric cobalt signal, < 5% of any viewport.
+   * emmmm.dev anchors this at L=58%, but there the accent only ever fills
+   * shapes. Here it also sets 12px text (tags, filter rail), and 58% measures
+   * 4.17:1 on this paper — under the 4.5 AA floor for small text. Dropped to
+   * 54% (4.92:1 on paper, 4.70:1 on paper-2); same hue and chroma, so the two
+   * sites still read as one accent. */
+  --c-accent: oklch(54% 0.2 256);
+  --c-accent-bright: oklch(72% 0.16 254);
+  --c-accent-wash: oklch(96% 0.03 254);
+
+  /* rules — hairlines carry the structure, not shadows */
+  --c-rule: oklch(24% 0.02 258 / 0.12);
+  --c-rule-strong: oklch(24% 0.02 258 / 0.2);
+  --c-focus: oklch(54% 0.2 256);
+
+  /* GitHub-rendered syntax tokens */
+  --c-syn-comment: oklch(52% 0.012 256);
+  --c-syn-keyword: oklch(52% 0.19 18);
+  --c-syn-string: oklch(34% 0.11 258);
+  --c-syn-constant: oklch(46% 0.16 256);
+  --c-syn-function: oklch(50% 0.19 300);
+  --c-syn-variable: oklch(50% 0.13 55);
+  --c-syn-tag: oklch(46% 0.12 155);
+}
+
+.dark {
+  color-scheme: dark;
+
+  --c-paper: oklch(17% 0.012 260);
+  --c-paper-2: oklch(21% 0.014 260);
+  --c-paper-3: oklch(25% 0.015 260);
+  --c-paper-blur: oklch(17% 0.012 260 / 0.82);
+
+  --c-ink: oklch(94% 0.006 250);
+  --c-ink-2: oklch(76% 0.012 254);
+  --c-ink-3: oklch(60% 0.014 256);
+
+  --c-accent: oklch(72% 0.16 254);
+  --c-accent-bright: oklch(80% 0.13 252);
+  --c-accent-wash: oklch(28% 0.04 256);
+
+  --c-rule: oklch(94% 0.006 250 / 0.14);
+  --c-rule-strong: oklch(94% 0.006 250 / 0.24);
+  --c-focus: oklch(72% 0.16 254);
+
+  --c-syn-comment: oklch(66% 0.012 256);
+  --c-syn-keyword: oklch(74% 0.15 22);
+  --c-syn-string: oklch(84% 0.08 250);
+  --c-syn-constant: oklch(78% 0.13 250);
+  --c-syn-function: oklch(78% 0.14 305);
+  --c-syn-variable: oklch(78% 0.12 60);
+  --c-syn-tag: oklch(84% 0.16 148);
+}
+
+:root {
+  /* tight technical radii — drawn with a ruler */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+}

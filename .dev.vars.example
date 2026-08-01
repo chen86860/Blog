@@ -1,0 +1,5 @@
+# Local-only secrets. Never commit this file.
+# A token is optional locally (unauthenticated GitHub allows 60 req/hour from
+# your IP) but required in production — Workers egress IPs are shared.
+# Create a fine-grained PAT with read-only "Issues" access to this repo.
+GITHUB_TOKEN=""
