@@ -8,6 +8,7 @@ import {
 import type { ReactNode } from 'react'
 
 import { ThemeToggle, themeInitScript } from '#/components/theme'
+import { PostHogAnalytics } from '#/lib/posthog'
 import { fetchSite } from '#/lib/posts'
 import appCss from '#/styles.css?url'
 
@@ -76,6 +77,7 @@ function RootDocument({ children }: { children: ReactNode }) {
           <main className="flex-1 pb-20">{children}</main>
           <Footer owner={site.owner} repo={site.repo} />
         </div>
+        <PostHogAnalytics />
         <Scripts />
       </body>
     </html>
