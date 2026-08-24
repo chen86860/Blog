@@ -446,11 +446,3 @@ Find me on ![Github](https://github.com/chen86860)
 5. [React 16: A look inside an API-compatible rewrite of our frontend UI library](https://code.fb.com/web/react-16-a-look-inside-an-api-compatible-rewrite-of-our-frontend-ui-library/)
 
 6. [React Fiber Architecture](https://github.com/acdlite/react-fiber-architecture)
-
----
-
--------我是分割线-----------
-
-另，我厂 **[REDACTED]** 在招JAVA、测试、前端、运营。大牛巨多，老板超级nice。欢迎童鞋简历来扰(传送门 hr@example.com) 🤣🤣🤣 
-
-[【[REDACTED]】[REDACTED]招聘信息-拉勾网](https://example.com)

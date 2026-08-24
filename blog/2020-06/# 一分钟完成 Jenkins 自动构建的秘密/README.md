@@ -12,7 +12,7 @@ Jenkins 的快速发布能减少交付等待时间，提高开发阶段的效率
 
 - html-webpack-plugin
 
-配置`babel-loader` 及`terser-webpack-plugin`的缓存可参照[加快 Jenkins 构建速度建议一二](https://webpack.js.org/configuration/cache/), 此处不再赘述。其他插件的缓存配置参考官方文档即可。这一步能大大加快打包速度，强烈建议开启。
+配置`babel-loader` 及`terser-webpack-plugin`的缓存可参照各自的官方文档, 此处不再赘述。其他插件的缓存配置参考官方文档即可。这一步能大大加快打包速度，强烈建议开启。
 
 此外，如果项目中使用了 [ESLint](https://eslint.org/) 以及配置了 pre-commit 钩子，还可以开启 ESLint 的缓存，用以减少不必要的文件检查——只对改变的文件进行检查，减少 pre-commit 阶段的时间。配置方法如下:
 
@@ -134,7 +134,7 @@ node("fed-server") {
 
 ![最终效果](https://i.loli.net/2020/06/18/6dYSbUOATws9mXN.jpg)
 
-完整配置可参考：[PROJECT 项目 Jenkins 配置](http://jenkins.example.com/job/PROJECT/configure)
+完整配置可在自己的 Jenkins 项目页面 `/job/<项目名>/configure` 中参照上文逐项填写。
 
 ### 总结
 
